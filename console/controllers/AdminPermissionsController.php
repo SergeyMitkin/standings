@@ -20,7 +20,7 @@ class AdminPermissionsController extends Controller
         // Получаем id пользователя со статусом админа
         $admin_id = User::findOne(['status' => User::STATUS_ADMIN])->id;
 
-        // Создаём rbac для админа
+        // Добавляем админу разрешения
         $am = \Yii::$app->authManager;
 
         $admin = $am->createRole('admin');
