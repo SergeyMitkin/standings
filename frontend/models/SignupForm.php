@@ -14,6 +14,7 @@ class SignupForm extends Model
     public $username;
     public $email;
     public $password;
+    public $status;
 
 
     /**
@@ -35,6 +36,7 @@ class SignupForm extends Model
 
             ['password', 'required'],
             ['password', 'string', 'min' => Yii::$app->params['user.passwordMinLength']],
+            ['status', 'number']
         ];
     }
 
@@ -55,6 +57,11 @@ class SignupForm extends Model
         $user->setPassword($this->password);
         $user->generateAuthKey();
         $user->generateEmailVerificationToken();
+
+        // При регистрации пользователя с именем admin, даём ему статус админа
+        if ($this->username === 'admin'){
+            $user->status = User::STATUS_ADMIN;
+        }
 
         return $user->save() && $this->sendEmail($user);
     }
