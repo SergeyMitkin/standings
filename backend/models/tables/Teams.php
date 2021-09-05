@@ -44,11 +44,11 @@ class Teams extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
-            'games' => 'Games',
-            'gf' => 'GF',
-            'ga' => 'GA',
-            'points' => 'Points',
+            'name' => 'Команда',
+            'games' => 'Игры',
+            'gf' => 'ЗМ',
+            'ga' => 'ПМ',
+            'points' => 'Очки',
         ];
     }
 }

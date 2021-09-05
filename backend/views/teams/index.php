@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'games',
             'gf',
             'ga',
-            //'points',
+            'points',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
