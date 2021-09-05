@@ -9,6 +9,10 @@ use Yii;
  *
  * @property int $id
  * @property string $name
+ * @property int|null $games
+ * @property int|null $gf
+ * @property int|null $ga
+ * @property int|null $points
  */
 class Teams extends \yii\db\ActiveRecord
 {
@@ -27,6 +31,7 @@ class Teams extends \yii\db\ActiveRecord
     {
         return [
             [['name'], 'required'],
+            [['games', 'gf', 'ga', 'points'], 'integer'],
             [['name'], 'string', 'max' => 250],
             [['name'], 'unique'],
         ];
@@ -40,6 +45,10 @@ class Teams extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'name' => 'Name',
+            'games' => 'Games',
+            'gf' => 'GF',
+            'ga' => 'GA',
+            'points' => 'Points',
         ];
     }
 }

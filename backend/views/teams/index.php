@@ -28,6 +28,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'name',
+            'games',
+            'gf',
+            'ga',
+            //'points',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

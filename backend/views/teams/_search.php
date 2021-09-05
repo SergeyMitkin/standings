@@ -19,6 +19,14 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'name') ?>
 
+    <?= $form->field($model, 'games') ?>
+
+    <?= $form->field($model, 'gf') ?>
+
+    <?= $form->field($model, 'ga') ?>
+
+    <?php // echo $form->field($model, 'points') ?>
+
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
         <?= Html::resetButton('Reset', ['class' => 'btn btn-outline-secondary']) ?>

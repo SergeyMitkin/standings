@@ -17,7 +17,7 @@ class TeamsFilter extends Teams
     public function rules()
     {
         return [
-            [['id'], 'integer'],
+            [['id', 'games', 'gf', 'ga', 'points'], 'integer'],
             [['name'], 'safe'],
         ];
     }
@@ -59,6 +59,10 @@ class TeamsFilter extends Teams
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'games' => $this->games,
+            'gf' => $this->gf,
+            'ga' => $this->ga,
+            'points' => $this->points,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name]);

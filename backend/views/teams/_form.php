@@ -14,6 +14,14 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
+    <?= $form->field($model, 'games')->textInput() ?>
+
+    <?= $form->field($model, 'gf')->textInput() ?>
+
+    <?= $form->field($model, 'ga')->textInput() ?>
+
+    <?= $form->field($model, 'points')->textInput() ?>
+
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>
