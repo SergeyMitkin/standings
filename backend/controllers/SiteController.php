@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use common\models\LoginForm;
+use common\models\User;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -28,11 +29,15 @@ class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index'],
+                        //'actions' => ['logout', 'index'],
                         'allow' => true,
-                        'roles' => ['@'],
+                        'roles' => ['adminAccess'],
                     ],
                 ],
+                // Если нет доступа к админке - направляем на форму входа
+                'denyCallback' => function($rule, $action) {
+                    \Yii::$app->response->redirect(['site/login']);
+                },
             ],
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -72,7 +77,7 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-        if (!Yii::$app->user->isGuest) {
+        if (!Yii::$app->user->isGuest && Yii::$app->user->identity->status == User::STATUS_ADMIN) {
             return $this->goHome();
         }
 
