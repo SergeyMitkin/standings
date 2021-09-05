@@ -7,6 +7,7 @@ use app\models\filters\TeamsFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * TeamsController implements the CRUD actions for Teams model.
@@ -69,11 +70,17 @@ class TeamsController extends Controller
         $model = new Teams();
 
         if ($this->request->isPost) {
+            $model->load($this->request->post());
+            $model->image = UploadedFile::getInstance($model, 'image');
+            $model->uploadBackendImage();
+            /*
             if ($model->load($this->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }
+            */
         } else {
             $model->loadDefaultValues();
+
         }
 
         return $this->render('create', [

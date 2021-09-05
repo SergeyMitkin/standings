@@ -3,6 +3,8 @@
 namespace app\models\tables;
 
 use Yii;
+use yii\imagine\Image;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "teams".
@@ -16,6 +18,9 @@ use Yii;
  */
 class Teams extends \yii\db\ActiveRecord
 {
+    /** @var UploadedFile*/
+    public $image;
+
     /**
      * {@inheritdoc}
      */
@@ -34,6 +39,7 @@ class Teams extends \yii\db\ActiveRecord
             [['games', 'gf', 'ga', 'points'], 'integer'],
             [['name'], 'string', 'max' => 250],
             [['name'], 'unique'],
+            [['image'], 'file']
         ];
     }
 
@@ -50,5 +56,16 @@ class Teams extends \yii\db\ActiveRecord
             'ga' => 'ПМ',
             'points' => 'Очки',
         ];
+    }
+
+    public function uploadBackendImage()
+    {
+        $fileName = $this->image->baseName . '.' . $this->image->extension;
+        $img_path = Yii::getAlias('@webroot/img/'. $fileName);
+        $img_path_small = Yii::getAlias('@webroot/img/small/'. $fileName);
+
+        $this->image->saveAs($img_path);
+        Image::thumbnail($img_path, 230, 150)
+            ->save($img_path_small);
     }
 }

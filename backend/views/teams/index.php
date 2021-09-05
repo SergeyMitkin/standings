@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\filters\TeamsFilter */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Teams';
+$this->title = 'Команды';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="teams-index">
@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Teams', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Создать команду', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
