@@ -27,14 +27,14 @@ class Upload extends Model
     public function uploadBackendImage()
     {
 
-        $fileName = $this->team_logo->baseName . '.' . $this->team_logo->extension;
-        $img_path = \Yii::getAlias('@webroot/img/'. $fileName);
-        $img_path_small = \Yii::getAlias('@webroot/img/small/'. $fileName);
+        $file_name = $this->team_logo->baseName . '.' . $this->team_logo->extension;
+        $img_path = \Yii::getAlias('@webroot/img/'. $file_name);
+        $img_path_small = \Yii::getAlias('@webroot/img/small/'. $file_name);
 
         $this->team_logo->saveAs($img_path);
         if (Image::thumbnail($img_path, 230, 150)
             ->save($img_path_small)){
-            return $img_path_small;
+            return 'img/small/' . $file_name;
         }
     }
 

@@ -19,6 +19,7 @@ class TeamsFilter extends Teams
         return [
             [['id', 'games', 'gf', 'ga', 'points'], 'integer'],
             [['name'], 'safe'],
+            [['logo_source'], 'string'],
         ];
     }
 
@@ -63,6 +64,7 @@ class TeamsFilter extends Teams
             'gf' => $this->gf,
             'ga' => $this->ga,
             'points' => $this->points,
+            'logo_source' => $this->logo_source,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name]);

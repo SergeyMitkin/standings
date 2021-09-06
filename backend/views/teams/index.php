@@ -26,13 +26,26 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
+          //  'id',
             'name',
             'games',
             'gf',
             'ga',
             'points',
-            'category_image:image',
+           // 'logo_source:image',
+            // Второй вариант. Формирование изображения и его параметров через анонимную функцию
+            [
+                'label' => 'Картинка',
+                'format' => 'raw',
+                'value' => function($data){
+                    return
+                        Html::img($data->logo_source,[
+                        'alt'=>'Эмблема команды',
+                        'style' => 'width:50px;'
+
+                    ]);
+                },
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
