@@ -5,6 +5,7 @@ namespace backend\controllers;
 use app\models\tables\Teams;
 use app\models\filters\TeamsFilter;
 use backend\models\Upload;
+use phpDocumentor\Reflection\Types\Null_;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -73,14 +74,18 @@ class TeamsController extends Controller
 
         if ($this->request->isPost) {
 
-            // Загружаем эмблему команды
-            $model_upload->team_logo = UploadedFile::getInstance($model_upload, 'team_logo');
+            if (UploadedFile::getInstance($model_upload, 'team_logo') !== Null){
+                // Загружаем эмблему команды
+                $model_upload->team_logo = UploadedFile::getInstance($model_upload, 'team_logo');
 
-            // Сохраняем адрес изображения эмблемы
-            $logo_array = ['logo_source' => $model_upload->uploadBackendImage()];
-            $model->attributes = array_merge($this->request->post()['Teams'], $logo_array);
+                // Сохраняем адрес изображения эмблемы
+                $logo_array = ['logo_source' => $model_upload->uploadBackendImage()];
+                $model->attributes = array_merge($this->request->post()['Teams'], $logo_array);
 
-            if ($model->save()){
+                if ($model->save()){
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+            } else if ($model->load($this->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }
 
@@ -109,27 +114,23 @@ class TeamsController extends Controller
         if ($this->request->isPost){
 
             // Загружаем эмблему команды
-            $model_upload->team_logo = UploadedFile::getInstance($model_upload, 'team_logo');
+            if (UploadedFile::getInstance($model_upload, 'team_logo') !== Null){
+                $model_upload->team_logo = UploadedFile::getInstance($model_upload, 'team_logo');
 
-            // Сохраняем адрес изображения эмблемы
-            $logo_array = ['logo_source' => $model_upload->uploadBackendImage()];
-            $model->attributes = array_merge($this->request->post()['Teams'], $logo_array);
+                // Сохраняем адрес изображения эмблемы
+                $logo_array = ['logo_source' => $model_upload->uploadBackendImage()];
+                $model->attributes = array_merge($this->request->post()['Teams'], $logo_array);
 
-            if ($model->save()){
-                return $this->redirect(['view', 'id' => $model->id]);
+                if ($model->save()){
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+            } else {
+                if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
             }
 
         }
-        /*
-        if ($model->save()){
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-        */
-        /*
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-        */
 
         return $this->render('update', [
             'model' => $model,

@@ -13,15 +13,6 @@ return [
     'bootstrap' => ['log'],
     'modules' => [],
     'components' => [
-        /*
-        'view' => [
-            'theme' => [
-                'pathMap' => [
-                    '@app/views' => '@app/views/yii2-adminlte-asset/example-views/yiisoft/yii2-app'
-                ],
-            ],
-        ],
-        */
         'request' => [
             'csrfParam' => '_csrf-backend',
         ],
