@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use app\models\tables\Teams;
 use app\models\filters\TeamsFilter;
+use backend\models\Upload;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -68,23 +69,28 @@ class TeamsController extends Controller
     public function actionCreate()
     {
         $model = new Teams();
+        $model_upload = new Upload(); // Модель загрузки файлов
 
         if ($this->request->isPost) {
-            $model->load($this->request->post());
-            $model->image = UploadedFile::getInstance($model, 'image');
-            $model->uploadBackendImage();
-            /*
-            if ($model->load($this->request->post()) && $model->save()) {
+
+            // Загружаем эмблему команды
+            $model_upload->team_logo = UploadedFile::getInstance($model_upload, 'team_logo');
+
+            // Сохраняем адрес изображения эмблемы
+            $logo_array = ['logo_source' => $model_upload->uploadBackendImage()];
+            $model->attributes = array_merge($this->request->post()['Teams'], $logo_array);
+
+            if ($model->save()){
                 return $this->redirect(['view', 'id' => $model->id]);
             }
-            */
+
         } else {
             $model->loadDefaultValues();
-
         }
 
         return $this->render('create', [
             'model' => $model,
+            'model_upload' => $model_upload
         ]);
     }
 

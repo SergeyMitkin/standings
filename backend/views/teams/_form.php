@@ -22,7 +22,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'points')->textInput() ?>
 
-    <?= $form->field($model, 'image')->fileInput()?>
+    <?= $form->field($model_upload, 'team_logo')->fileInput()?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

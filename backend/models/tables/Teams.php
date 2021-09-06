@@ -15,11 +15,10 @@ use yii\web\UploadedFile;
  * @property int|null $gf
  * @property int|null $ga
  * @property int|null $points
+ * @property string $logo_source
  */
 class Teams extends \yii\db\ActiveRecord
 {
-    /** @var UploadedFile*/
-    public $image;
 
     /**
      * {@inheritdoc}
@@ -39,7 +38,7 @@ class Teams extends \yii\db\ActiveRecord
             [['games', 'gf', 'ga', 'points'], 'integer'],
             [['name'], 'string', 'max' => 250],
             [['name'], 'unique'],
-            [['image'], 'file']
+            [['logo_source'], 'string', 'max' => 250],
         ];
     }
 
@@ -55,17 +54,17 @@ class Teams extends \yii\db\ActiveRecord
             'gf' => 'ЗМ',
             'ga' => 'ПМ',
             'points' => 'Очки',
+            'logo_source' => 'Эмблема'
         ];
     }
 
-    public function uploadBackendImage()
-    {
-        $fileName = $this->image->baseName . '.' . $this->image->extension;
-        $img_path = Yii::getAlias('@webroot/img/'. $fileName);
-        $img_path_small = Yii::getAlias('@webroot/img/small/'. $fileName);
 
-        $this->image->saveAs($img_path);
-        Image::thumbnail($img_path, 230, 150)
-            ->save($img_path_small);
+
+    // Записываем адрес изображения в БД
+    /*
+    public function setImageSource($image_source){
+        $this->image_source = $image_source;
+        $this->save();
     }
+    */
 }

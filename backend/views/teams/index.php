@@ -32,6 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'gf',
             'ga',
             'points',
+            'category_image:image',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
