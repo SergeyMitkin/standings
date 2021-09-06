@@ -104,13 +104,36 @@ class TeamsController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $model_upload = new Upload();
 
+        if ($this->request->isPost){
+
+            // Загружаем эмблему команды
+            $model_upload->team_logo = UploadedFile::getInstance($model_upload, 'team_logo');
+
+            // Сохраняем адрес изображения эмблемы
+            $logo_array = ['logo_source' => $model_upload->uploadBackendImage()];
+            $model->attributes = array_merge($this->request->post()['Teams'], $logo_array);
+
+            if ($model->save()){
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+
+        }
+        /*
+        if ($model->save()){
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
+        */
+        /*
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
+        */
 
         return $this->render('update', [
             'model' => $model,
+            'model_upload' => $model_upload
         ]);
     }
 

@@ -32,7 +32,7 @@ class Upload extends Model
         $img_path_small = \Yii::getAlias('@webroot/img/small/'. $file_name);
 
         $this->team_logo->saveAs($img_path);
-        if (Image::thumbnail($img_path, 230, 150)
+        if (Image::thumbnail($img_path, 230, 180)
             ->save($img_path_small)){
             return 'img/small/' . $file_name;
         }
