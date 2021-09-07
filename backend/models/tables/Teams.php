@@ -33,7 +33,7 @@ class Teams extends \yii\db\ActiveRecord
     {
         return [
             [['name'], 'required'],
-            [['games', 'gf', 'ga', 'points'], 'integer'],
+            [['games', 'gf', 'ga','points'], 'integer'],
             [['name'], 'string', 'max' => 250],
             [['name'], 'unique'],
             [['logo_source'], 'string', 'max' => 250],
@@ -56,12 +56,20 @@ class Teams extends \yii\db\ActiveRecord
         ];
     }
 
-    // Редактируем записи команд после игры
-    public function gamePlayed($home_id, $visitor_id, $home_goals, $visitor_goals){
+    // Заносим данные в БД команд после игры
+    public function gamePlayed($game_id, $home_id, $visitor_id, $home_goals, $visitor_goals){
 
         $home_team = $this::findOne($home_id);
         $visitor_team = $this::findOne($visitor_id);
 
+        // Добавляем запись в составную таблицу games_teams
+        Yii::$app->db
+            ->createCommand
+            ('INSERT INTO games_teams (game_id, home_id, visitor_id)
+              VALUES (' . $game_id . ', ' . $home_id . ', ' . $visitor_id .');')
+            ->execute();
+
+        // Обновляем запись команды хозяев
         $home_team->updateCounters([
             'games' => 1,
             'gf' => $home_goals,
@@ -69,12 +77,17 @@ class Teams extends \yii\db\ActiveRecord
             'points' => $this->getPoints($home_goals, $visitor_goals)
         ]);
 
+        // Обновляем запись команды гостей
         $visitor_team->updateCounters([
             'games' => 1,
             'gf' => $visitor_goals,
             'ga' => $home_goals,
             'points' => $this->getPoints($visitor_goals, $home_goals)
         ]);
+    }
+
+    public function gameUpdated(){
+
     }
 
     // По разнице забитых и пропущенных мячей в игре, определяем количество набранных очков
@@ -87,7 +100,6 @@ class Teams extends \yii\db\ActiveRecord
         } elseif ($gf == $ga){
             return 1;
         }
-
     }
 
 }

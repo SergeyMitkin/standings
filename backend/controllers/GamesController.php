@@ -5,7 +5,6 @@ namespace backend\controllers;
 use app\models\tables\Games;
 use app\models\filters\GamesFilter;
 use app\models\tables\Teams;
-use Codeception\Util\Debug;
 use yii\base\Event;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
@@ -71,13 +70,14 @@ class GamesController extends Controller
     public function actionCreate()
     {
         $model = new Games();
-        $model_teams = new Teams();
 
         // При добавлении игры, изменяем записи команд в таблице teams
         Event::on(Games::class, Games::EVENT_AFTER_INSERT, function ($event){
 
-            $post = $this->request->post()['Games'];
+            $game_id = $event->sender['id']; // Id дабавленной игры
 
+            // Данные из $_POST
+            $post = $this->request->post()['Games'];
             $home_id = $post['home_id'];
             $visitor_id = $post['visitor_id'];
             $home_goals = $post['home_goals'];
@@ -85,16 +85,14 @@ class GamesController extends Controller
             $date = $post['date'];
 
             $model_teams = new Teams();
-            $model_teams->gamePlayed($home_id, $visitor_id, $home_goals, $visitor_goals, $date);
+            $model_teams->gamePlayed($game_id, $home_id, $visitor_id, $home_goals, $visitor_goals, $date);
 
         });
-
-
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
 
-                return $this->redirect(['view', 'id' => $model->id]);
+               return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
             $model->loadDefaultValues();
@@ -119,6 +117,26 @@ class GamesController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+
+        // При добавлении игры, изменяем записи команд в таблице teams
+        Event::on(Games::class, Games::EVENT_AFTER_UPDATE, function ($event){
+
+
+
+            $post = $this->request->post()['Games'];
+
+            $home_id = $post['home_id'];
+            $visitor_id = $post['visitor_id'];
+            $home_goals = $post['home_goals'];
+            $visitor_goals = $post['visitor_goals'];
+            $date = $post['date'];
+
+            $model_teams = new Teams();
+            $model_teams->gamePlayed($home_id, $visitor_id, $home_goals, $visitor_goals, $date);
+
+        });
+
+
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
