@@ -33,7 +33,7 @@ class Games extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['home_id', 'visitor_id', 'date'], 'required'],
+            [['home_id', 'visitor_id', 'date', 'home_goals', 'visitor_goals'], 'required'],
             [['home_id', 'visitor_id', 'home_goals', 'visitor_goals'], 'integer'],
             [['date'], 'safe'],
             [['home_id'], 'exist', 'skipOnError' => true, 'targetClass' => Teams::className(), 'targetAttribute' => ['home_id' => 'id']],
@@ -48,11 +48,11 @@ class Games extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'home_id' => 'Home ID',
-            'visitor_id' => 'Visitor ID',
-            'date' => 'Date',
-            'home_goals' => 'Home Goals',
-            'visitor_goals' => 'Visitor Goals',
+            'home_id' => 'Хозяева',
+            'visitor_id' => 'Гости',
+            'date' => 'Дата',
+            'home_goals' => 'Голы хозяев',
+            'visitor_goals' => 'Голы гостей',
         ];
     }
 

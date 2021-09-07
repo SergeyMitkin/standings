@@ -69,9 +69,21 @@ class GamesController extends Controller
     public function actionCreate()
     {
         $model = new Games();
+        $model_teams = new Teams();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
+
+                // При добавлении игры, заносим данные в таблицу teams
+                // --- ОТЛАДКА НАЧАЛО
+                echo '<pre>';
+                var_dump($this->request->post());
+                echo'</pre>';
+                die;
+                // --- Отладка конец
+
+
+
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
