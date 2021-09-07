@@ -24,7 +24,7 @@ class Games extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'games';
+        return 'games';// games
     }
 
     /**
