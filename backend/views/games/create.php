@@ -3,19 +3,19 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\tables\Teams */
+/* @var $model app\models\tables\Games */
 
-$this->title = 'Создать команду';
-$this->params['breadcrumbs'][] = ['label' => 'Teams', 'url' => ['index']];
+$this->title = 'Создать игру';
+$this->params['breadcrumbs'][] = ['label' => 'Игра', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="teams-create">
+<div class="games-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
         'model' => $model,
-        'model_upload' => $model_upload
+        'team_list' => $team_list
     ]) ?>
 
 </div>

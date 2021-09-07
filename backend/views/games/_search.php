@@ -4,11 +4,11 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\filters\TeamsFilter */
+/* @var $model app\models\filters\GamesFilter */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="teams-search">
+<div class="games-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
@@ -17,15 +17,15 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'name') ?>
+    <?= $form->field($model, 'home_id') ?>
 
-    <?= $form->field($model, 'games') ?>
+    <?= $form->field($model, 'visitor_id') ?>
 
-    <?= $form->field($model, 'gf') ?>
+    <?= $form->field($model, 'date') ?>
 
-    <?= $form->field($model, 'ga') ?>
+    <?= $form->field($model, 'home_goals') ?>
 
-    <?php echo $form->field($model, 'points') ?>
+    <?php echo $form->field($model, 'visitor_goals') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
