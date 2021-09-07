@@ -3,8 +3,6 @@
 namespace app\models\tables;
 
 use Yii;
-use yii\imagine\Image;
-use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "teams".
@@ -58,13 +56,38 @@ class Teams extends \yii\db\ActiveRecord
         ];
     }
 
+    // Редактируем записи команд после игры
+    public function gamePlayed($home_id, $visitor_id, $home_goals, $visitor_goals){
 
+        $home_team = $this::findOne($home_id);
+        $visitor_team = $this::findOne($visitor_id);
 
-    // Записываем адрес изображения в БД
-    /*
-    public function setImageSource($image_source){
-        $this->image_source = $image_source;
-        $this->save();
+        $home_team->updateCounters([
+            'games' => 1,
+            'gf' => $home_goals,
+            'ga' => $visitor_goals,
+            'points' => $this->getPoints($home_goals, $visitor_goals)
+        ]);
+
+        $visitor_team->updateCounters([
+            'games' => 1,
+            'gf' => $visitor_goals,
+            'ga' => $home_goals,
+            'points' => $this->getPoints($visitor_goals, $home_goals)
+        ]);
     }
-    */
+
+    // По разнице забитых и пропущенных мячей в игре, определяем количество набранных очков
+    private function getPoints($gf, $ga){
+
+        if ($gf > $ga){
+            return 3;
+        } elseif ($gf < $ga){
+            return 0;
+        } elseif ($gf == $ga){
+            return 1;
+        }
+
+    }
+
 }

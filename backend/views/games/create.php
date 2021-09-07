@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $model app\models\tables\Games */
 
 $this->title = 'Создать игру';
-$this->params['breadcrumbs'][] = ['label' => 'Игра', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Игры', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="games-create">
