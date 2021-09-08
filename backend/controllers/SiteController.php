@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use app\models\filters\TeamsFilter;
 use common\models\LoginForm;
 use common\models\User;
 use Yii;
@@ -67,7 +68,13 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $searchModel = new TeamsFilter();
+        $dataProvider = $searchModel->search($this->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
     /**

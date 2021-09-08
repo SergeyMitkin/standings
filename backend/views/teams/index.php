@@ -32,10 +32,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'gf',
             'ga',
             'points',
-           // 'logo_source:image',
-            // Второй вариант. Формирование изображения и его параметров через анонимную функцию
             [
-                'label' => 'Картинка',
+                'label' => 'Эмблема',
                 'format' => 'raw',
                 'value' => function($data){
                     return

@@ -44,10 +44,21 @@ class TeamsFilter extends Teams
         $query = Teams::find();
 
         // add conditions that should always apply here
-
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
+        // В публичной части выводим команды по количеству очков
+        if (\Yii::$app->controller->id == 'site'){
+            $dataProvider = new ActiveDataProvider([
+                'query' => $query,
+                'sort'=>[
+                    'defaultOrder'=>[
+                        'points'=>SORT_DESC
+                    ]
+                ]
+            ]);
+        } else {
+            $dataProvider = new ActiveDataProvider([
+                'query' => $query,
+            ]);
+        }
 
         $this->load($params);
 

@@ -31,6 +31,7 @@
                 'options' => ['class' => 'sidebar-menu tree', 'data-widget'=> 'tree'],
                 'items' => [
                     ['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
+                    ['label' => 'Главная', 'url' => ['/']],
                     ['label' => 'Команды', 'url' => ['/teams']],
                     ['label' => 'Игры', 'url' => ['/games']],
                     ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii']],
