@@ -21,31 +21,39 @@ $this->title = 'Турнирная таблица';
 
         <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
+        <?// $dataProvider->setModels($dataProvider->getModels()); ?>
+
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
             'filterModel' => $searchModel,
-
             'columns' => [
-                ['class' => 'yii\grid\SerialColumn'],
+                [
+                    'label' => 'Положение команд',
+                    'content' => function($model, $key, $index, $column){
 
-                //  'id',
-                'name',
+                        $place = $index+1; // Турнирное положение
+
+                        if(\Yii::$app->request->get()['sort'] !== null && \Yii::$app->request->get()['sort'] == 'points'){
+                            $place = $column->grid->dataProvider->totalCount - $index;
+                        }
+
+                        return
+                            '<span class="team-name-span"><b>' . $place . '</b></span>' .
+
+                            Html::img($model->logo_source,[
+                            'alt'=>'Эмблема команды',
+                            'style' => 'width:50px'
+                            ]) .
+
+                            '<span class="team-name-span"><b>' . $model->name . '</b></span>'
+                            ;
+
+                    }
+                ],
                 'games',
                 'gf',
                 'ga',
                 'points',
-                [
-                    'label' => 'Эмблема',
-                    'format' => 'raw',
-                    'value' => function($data){
-                        return
-                            Html::img($data->logo_source,[
-                                'alt'=>'Эмблема команды',
-                                'style' => 'width:50px;'
-
-                            ]);
-                    },
-                ],
 
                 ['class' => 'yii\grid\ActionColumn'],
             ],
