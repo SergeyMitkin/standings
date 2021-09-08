@@ -118,13 +118,22 @@ class GamesController extends Controller
     {
         $model = $this->findModel($id);
 
-        // При добавлении игры, изменяем записи команд в таблице teams
+        // Перед редактированием игры, вычитаем у команд голы и очки за эту игру
+        Event::on(Games::class, Games::EVENT_BEFORE_UPDATE, function ($event){
+
+            $game_id = $event->sender['id'];
+
+            $model_teams = new Teams();
+            $model_teams->gameDeleted($game_id);
+
+        });
+
+        // После редактирования, добавляем командам голы и очки за эту игру
         Event::on(Games::class, Games::EVENT_AFTER_UPDATE, function ($event){
 
-
+            $game_id = $event->sender['id'];
 
             $post = $this->request->post()['Games'];
-
             $home_id = $post['home_id'];
             $visitor_id = $post['visitor_id'];
             $home_goals = $post['home_goals'];
@@ -132,14 +141,12 @@ class GamesController extends Controller
             $date = $post['date'];
 
             $model_teams = new Teams();
-            $model_teams->gamePlayed($home_id, $visitor_id, $home_goals, $visitor_goals, $date);
+            $model_teams->gameUpdated($game_id, $home_id, $visitor_id, $home_goals, $visitor_goals, $date);
 
         });
 
-
-
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+           // return $this->redirect(['view', 'id' => $model->id]);
         }
 
         // Список команд
@@ -160,6 +167,16 @@ class GamesController extends Controller
      */
     public function actionDelete($id)
     {
+        // Перед удалением игры, обновляем записи игравших команд (голы, очки)
+        Event::on(Games::class, Games::EVENT_BEFORE_DELETE, function ($event){
+
+            $game_id = $event->sender['id'];
+
+            $model_teams = new Teams();
+            $model_teams->gameDeleted($game_id);
+
+        });
+
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
