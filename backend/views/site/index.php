@@ -21,28 +21,32 @@ $this->title = 'Турнирная таблица';
 
         <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-        <?// $dataProvider->setModels($dataProvider->getModels()); ?>
-
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
-            'filterModel' => $searchModel,
+            //'filterModel' => $searchModel,
+            'summary' => false,
             'columns' => [
                 [
+                    'attribute' => 'points',
                     'label' => 'Положение команд',
+                    'contentOptions' => [
+                            'class' => 'col-md-8'
+                    ],
                     'content' => function($model, $key, $index, $column){
 
-                        $place = $index+1; // Турнирное положение
-
+                        // Турнирное положение
+                        $place = $index+1;
                         if(\Yii::$app->request->get()['sort'] !== null && \Yii::$app->request->get()['sort'] == 'points'){
                             $place = $column->grid->dataProvider->totalCount - $index;
                         }
 
                         return
-                            '<span class="team-name-span"><b>' . $place . '</b></span>' .
+                            '<span class="team-place-span"><b>' . $place . '</b></span>' .
 
                             Html::img($model->logo_source,[
-                            'alt'=>'Эмблема команды',
-                            'style' => 'width:50px'
+                                'class' => 'team_logo_img',
+                                'alt'=>'Эмблема команды',
+                                'style' => 'width:50px'
                             ]) .
 
                             '<span class="team-name-span"><b>' . $model->name . '</b></span>'
@@ -51,11 +55,25 @@ $this->title = 'Турнирная таблица';
                     }
                 ],
                 'games',
-                'gf',
-                'ga',
-                'points',
+                //'gf',
+                //'ga',
+                [
+                    'attribute' => 'goalsAmount',
+                    //'label' => 'Мячи',
+                    'content' => function($model, $key, $index, $column){
+                        return
+                            '<span class="team-place-span">' . $model->gf . '</span>' .
+                            ' - ' .
+                            '<span class="team-name-span">' . $model->ga . '</span>'
+                            ;
+                    }
+                ],
 
-                ['class' => 'yii\grid\ActionColumn'],
+                [
+                    'attribute' => 'points',
+                    'enableSorting' => false
+                ]
+                //['class' => 'yii\grid\ActionColumn'],
             ],
         ]);
 

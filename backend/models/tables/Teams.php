@@ -52,8 +52,14 @@ class Teams extends \yii\db\ActiveRecord
             'gf' => 'ЗМ',
             'ga' => 'ПМ',
             'points' => 'Очки',
-            'logo_source' => 'Эмблема'
+            'logo_source' => 'Эмблема',
+            'goalsAmount' => 'Мячи'
         ];
+    }
+
+    // Определяем сумму забитых и пропущенных мячей для сортировки
+    public function getGoalsAmount($team_id){
+        return $this::findOne($team_id)->gf + $this::findOne($team_id)->ga;
     }
 
     // Изменяем данные команд после игры

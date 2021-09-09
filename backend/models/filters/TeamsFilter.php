@@ -20,6 +20,7 @@ class TeamsFilter extends Teams
             [['id', 'games', 'gf', 'ga', 'points'], 'integer'],
             [['name'], 'safe'],
             [['logo_source'], 'string'],
+            [['goalsAmount'], 'safe']
         ];
     }
 
@@ -41,20 +42,32 @@ class TeamsFilter extends Teams
      */
     public function search($params)
     {
-        $query = Teams::find();
-
         // add conditions that should always apply here
         // В публичной части выводим команды по количеству очков
         if (\Yii::$app->controller->id == 'site'){
+
+            // Добавляем к выборке сумму забитых и пропущенных голов для сортировки
+            $query = Teams::find()
+                ->select('*, (gf + ga) AS goalsAmount');
+
             $dataProvider = new ActiveDataProvider([
                 'query' => $query,
                 'sort'=>[
+                    'attributes' => [
+                        'points',
+                        'goalsAmount'
+                    ],
+
                     'defaultOrder'=>[
                         'points'=>SORT_DESC
                     ]
+
                 ]
             ]);
         } else {
+
+            $query = Teams::find();
+
             $dataProvider = new ActiveDataProvider([
                 'query' => $query,
             ]);
