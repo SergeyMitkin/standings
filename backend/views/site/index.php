@@ -55,11 +55,9 @@ $this->title = 'Турнирная таблица';
                     }
                 ],
                 'games',
-                //'gf',
-                //'ga',
+
                 [
                     'attribute' => 'goalsAmount',
-                    //'label' => 'Мячи',
                     'content' => function($model, $key, $index, $column){
                         return
                             '<span class="team-place-span">' . $model->gf . '</span>' .

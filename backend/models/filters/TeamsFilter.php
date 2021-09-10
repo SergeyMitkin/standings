@@ -20,7 +20,6 @@ class TeamsFilter extends Teams
             [['id', 'games', 'gf', 'ga', 'points'], 'integer'],
             [['name'], 'safe'],
             [['logo_source'], 'string'],
-            [['goalsAmount'], 'safe']
         ];
     }
 

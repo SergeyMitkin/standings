@@ -57,11 +57,6 @@ class Teams extends \yii\db\ActiveRecord
         ];
     }
 
-    // Определяем сумму забитых и пропущенных мячей для сортировки
-    public function getGoalsAmount($team_id){
-        return $this::findOne($team_id)->gf + $this::findOne($team_id)->ga;
-    }
-
     // Изменяем данные команд после игры
     public function gamePlayed($game_id, $home_id, $visitor_id, $home_goals, $visitor_goals){
 
