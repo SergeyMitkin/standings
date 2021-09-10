@@ -31,7 +31,7 @@ class Upload extends Model
         $img_path_small = \Yii::getAlias('@com_images/team_logo/small/'. $file_name);
 
         $this->team_logo->saveAs($img_path);
-        if (Image::thumbnail($img_path, 230, 130)
+        if (Image::thumbnail($img_path, 230, 180)
             ->save($img_path_small)){
             return 'images/team_logo_subdir/small/' . $file_name;
         }

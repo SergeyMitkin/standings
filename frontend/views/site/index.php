@@ -3,51 +3,85 @@
 /* @var $this yii\web\View */
 
 $this->title = 'My Yii Application';
+
+use yii\grid\GridView;
+use yii\helpers\Html;
+
+$this->title = 'Турнирная таблица';
 ?>
 <div class="site-index">
 
     <div class="jumbotron text-center bg-transparent">
-        <h1 class="display-4">Congratulations!</h1>
-
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
+        <h1 class="display-4">Турнирная таблица</h1>
     </div>
 
     <div class="body-content">
 
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
+        <div class="site-index">
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
+            <div class="body-content">
 
-                <p><a class="btn btn-outline-secondary" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
+                <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
+                <?= GridView::widget([
+                    'dataProvider' => $dataProvider,
+                    //'filterModel' => $searchModel,
+                    'summary' => false,
+                    'columns' => [
+                        [
+                            'attribute' => 'points',
+                            'headerOptions' => [
+                                'class' => $sorting_order
+                            ],
+                            'label' => 'Положение команд',
+                            'contentOptions' => [
+                                'class' => 'col-md-8'
+                            ],
+                            'content' => function($model, $key, $index, $column){
 
-                <p><a class="btn btn-outline-secondary" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
+                                // Турнирное положение
+                                $place = $index+1;
+                                if(\Yii::$app->request->get()['sort'] !== null && \Yii::$app->request->get()['sort'] == 'points'){
+                                    $place = $column->grid->dataProvider->totalCount - $index;
+                                }
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
+                                return
+                                    '<span class="team-place-span">' . $place . '</span>' .
+                                    '<div class="team-logo-div">' .
+                                    Html::img($model->logo_source,[
+                                        'class' => 'team_logo_img',
+                                        'alt'=>'Эмблема команды',
+                                        'style' => 'width:50px'
+                                    ]) .
+                                    '</div>' .
+                                    '<span class="team-name-span">' . $model->name . '</span>'
+                                    ;
+                            }
+                        ],
+                        'games',
+                        [
+                            'attribute' => 'goalsAmount',
+                            'content' => function($model, $key, $index, $column){
+                                return
+                                    '<span class="team-place-span">' . $model->gf . '</span>' .
+                                    ' - ' .
+                                    '<span class="team-name-span">' . $model->ga . '</span>'
+                                    ;
+                            }
+                        ],
+                        [
+                            'attribute' => 'points',
+                            'enableSorting' => false
+                        ]
+                        //['class' => 'yii\grid\ActionColumn'],
+                    ],
+                ]);
 
-                <p><a class="btn btn-outline-secondary" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
+                ?>
+
             </div>
         </div>
+
 
     </div>
 </div>

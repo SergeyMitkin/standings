@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use backend\models\filters\TeamsFilter;
+use frontend\assets\SiteIndexAsset;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
@@ -79,7 +80,16 @@ class SiteController extends Controller
         $searchModel = new TeamsFilter();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
-        return $this->render('index');
+        // Определяем показывать или нет порядок сортировки
+        $sorting_order = (!Yii::$app->request->get()['sort']) ? 'sorting-order-fade' : 'sorting-order-show';
+
+        SiteIndexAsset::register(Yii::$app->getView());
+
+        return $this->render('index', [
+            'sorting_order' => $sorting_order,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
     /**

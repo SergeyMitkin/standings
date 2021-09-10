@@ -1,0 +1,17 @@
+.sorting-order-fade a.desc:after {
+    border-top: none;
+}
+
+.team-place-span{
+    margin-right: 10px;
+    font-size: large;
+}
+
+.team-logo-div{
+    display: inline;
+    margin-right: 10px;
+}
+
+.team-name-span{
+    font-size: large;
+}
