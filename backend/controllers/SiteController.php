@@ -2,7 +2,7 @@
 
 namespace backend\controllers;
 
-use app\models\filters\TeamsFilter;
+use backend\models\filters\TeamsFilter;
 use backend\assets\SiteIndexAsset;
 use common\models\LoginForm;
 use common\models\User;

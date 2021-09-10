@@ -2,9 +2,9 @@
 
 namespace backend\controllers;
 
-use app\models\tables\Games;
-use app\models\filters\GamesFilter;
-use app\models\tables\Teams;
+use backend\models\tables\Games;
+use backend\models\filters\GamesFilter;
+use backend\models\tables\Teams;
 use yii\base\Event;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;

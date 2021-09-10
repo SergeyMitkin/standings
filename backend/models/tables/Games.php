@@ -1,8 +1,7 @@
 <?php
 
-namespace app\models\tables;
+namespace backend\models\tables;
 
-use Yii;
 
 /**
  * This is the model class for table "games".

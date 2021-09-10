@@ -1,10 +1,10 @@
 <?php
 
-namespace app\models\filters;
+namespace backend\models\filters;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\tables\Teams;
+use backend\models\tables\Teams;
 
 /**
  * TeamsFilter represents the model behind the search form of `app\models\tables\Teams`.
