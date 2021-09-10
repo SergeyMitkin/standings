@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use app\models\filters\TeamsFilter;
+use backend\assets\SiteIndexAsset;
 use common\models\LoginForm;
 use common\models\User;
 use Yii;
@@ -71,7 +72,13 @@ class SiteController extends Controller
         $searchModel = new TeamsFilter();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
+        // Определяем показывать или нет порядок сортировки
+        $sorting_order = (!Yii::$app->request->get()['sort']) ? 'sorting-order-fade' : 'sorting-order-show';
+
+        SiteIndexAsset::register(Yii::$app->getView());
+
         return $this->render('index', [
+            'sorting_order' => $sorting_order,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);

@@ -6,16 +6,9 @@ use yii\grid\GridView;
 use yii\helpers\Html;
 
 $this->title = 'Турнирная таблица';
+
 ?>
 <div class="site-index">
-
-    <div class="jumbotron text-center bg-transparent">
-        <h1 class="display-4">Congratulations, <?=Yii::$app->user->identity->username?>!</h1>
-
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
-    </div>
 
     <div class="body-content">
 
@@ -28,6 +21,9 @@ $this->title = 'Турнирная таблица';
             'columns' => [
                 [
                     'attribute' => 'points',
+                    'headerOptions' => [
+                            'class' => $sorting_order
+                    ],
                     'label' => 'Положение команд',
                     'contentOptions' => [
                             'class' => 'col-md-8'
@@ -51,11 +47,9 @@ $this->title = 'Турнирная таблица';
 
                             '<span class="team-name-span"><b>' . $model->name . '</b></span>'
                             ;
-
                     }
                 ],
                 'games',
-
                 [
                     'attribute' => 'goalsAmount',
                     'content' => function($model, $key, $index, $column){
@@ -66,7 +60,6 @@ $this->title = 'Турнирная таблица';
                             ;
                     }
                 ],
-
                 [
                     'attribute' => 'points',
                     'enableSorting' => false

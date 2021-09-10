@@ -79,7 +79,7 @@ class TeamsController extends Controller
                 $model_upload->team_logo = UploadedFile::getInstance($model_upload, 'team_logo');
 
                 // Сохраняем адрес изображения эмблемы
-                $logo_array = ['logo_source' => $model_upload->uploadBackendImage()];
+                $logo_array = ['logo_source' => $model_upload->uploadCommonImage()];
                 $model->attributes = array_merge($this->request->post()['Teams'], $logo_array);
 
                 if ($model->save()){
@@ -118,7 +118,7 @@ class TeamsController extends Controller
                 $model_upload->team_logo = UploadedFile::getInstance($model_upload, 'team_logo');
 
                 // Сохраняем адрес изображения эмблемы
-                $logo_array = ['logo_source' => $model_upload->uploadBackendImage()];
+                $logo_array = ['logo_source' => $model_upload->uploadCommonImage()];
                 $model->attributes = array_merge($this->request->post()['Teams'], $logo_array);
 
                 if ($model->save()){
