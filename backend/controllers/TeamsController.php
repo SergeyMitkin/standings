@@ -78,11 +78,13 @@ class TeamsController extends Controller
         if ($this->request->isPost) {
 
             if (UploadedFile::getInstance($model_upload, 'team_logo') !== Null){
+
                 // Загружаем эмблему команды
                 $model_upload->team_logo = UploadedFile::getInstance($model_upload, 'team_logo');
 
-                // Сохраняем адрес изображения эмблемы
-                $logo_array = ['logo_source' => $model_upload->uploadCommonImage()];
+                // Сохраняем адреса полного и уменьшенного изображений эмблемы
+                $logo_array = $model_upload->uploadCommonImage();
+
                 $model->attributes = array_merge($this->request->post()['Teams'], $logo_array);
 
                 if ($model->save()){
@@ -118,10 +120,13 @@ class TeamsController extends Controller
 
             // Загружаем эмблему команды
             if (UploadedFile::getInstance($model_upload, 'team_logo') !== Null){
+
+                // Загружаем эмблему команды
                 $model_upload->team_logo = UploadedFile::getInstance($model_upload, 'team_logo');
 
-                // Сохраняем адрес изображения эмблемы
-                $logo_array = ['logo_source' => $model_upload->uploadCommonImage()];
+                // Сохраняем адреса полного и уменьшенного изображений эмблемы
+                $logo_array = $model_upload->uploadCommonImage();
+
                 $model->attributes = array_merge($this->request->post()['Teams'], $logo_array);
 
                 if ($model->save()){

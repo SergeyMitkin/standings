@@ -30,10 +30,16 @@ class Upload extends Model
         $img_path = \Yii::getAlias('@com_images/team_logo/'. $file_name);
         $img_path_small = \Yii::getAlias('@com_images/team_logo/small/'. $file_name);
 
+        // Загружаем полную и уменьшенную изображения
         $this->team_logo->saveAs($img_path);
-        if (Image::thumbnail($img_path, 230, 180)
+        if (Image::thumbnail($img_path, 260, 180)
             ->save($img_path_small)){
-            return 'images/team_logo_subdir/small/' . $file_name;
+
+            // Возвращаем пути к изображениям
+            return [
+                'logo_source' => 'images/team_logo_subdir/' . $file_name,
+                'logo_source_small' => 'images/team_logo_subdir/small/' . $file_name
+            ];
         }
     }
 

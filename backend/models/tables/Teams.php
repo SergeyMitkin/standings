@@ -14,6 +14,7 @@ use Yii;
  * @property int|null $ga
  * @property int|null $points
  * @property string $logo_source
+ * @property string $logo_source_small
  */
 class Teams extends \yii\db\ActiveRecord
 {
@@ -36,7 +37,7 @@ class Teams extends \yii\db\ActiveRecord
             [['games', 'gf', 'ga','points'], 'integer'],
             [['name'], 'string', 'max' => 250],
             [['name'], 'unique'],
-            [['logo_source'], 'string', 'max' => 250],
+            [['logo_source', 'logo_source_small'], 'string', 'max' => 250],
         ];
     }
 
@@ -53,6 +54,7 @@ class Teams extends \yii\db\ActiveRecord
             'ga' => 'ПМ',
             'points' => 'Очки',
             'logo_source' => 'Эмблема',
+            'logo_source_small' => 'Эмблема',
             'goalsAmount' => 'Мячи'
         ];
     }

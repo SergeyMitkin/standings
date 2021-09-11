@@ -25,8 +25,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-          //  'id',
+            [
+                    'attribute' => 'id',
+                'headerOptions' => [
+                        'class' => 'col-md-1'
+                ]
+            ],
             'name',
             'games',
             'gf',
@@ -37,10 +41,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'raw',
                 'value' => function($data){
                     return
-                        Html::img($data->logo_source,[
+                        Html::img($data->logo_source_small,[
                         'alt'=>'Эмблема команды',
                         'style' => 'width:50px;'
-
                     ]);
                 },
             ],
