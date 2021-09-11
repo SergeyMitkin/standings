@@ -19,6 +19,7 @@ use dmstr\widgets\Alert;
                     echo ($this->context->module->id !== \Yii::$app->id) ? '<small>Module</small>' : '';
                 } ?>
             </h1>
+            <span class="after-page-title-span"><?=$this->params['after_page_title']?></span>
         <?php } ?>
 
         <?=

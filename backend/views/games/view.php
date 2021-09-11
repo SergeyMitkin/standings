@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\tables\Games */
 
-$this->title = $model->id;
+$this->title = $model->getHome()->one()->name . ' ' . $model->home_goals . ' : ' . $model->visitor_goals . ' ' . $model->getVisitor()->one()->name;
 $this->params['breadcrumbs'][] = ['label' => 'Игры', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);

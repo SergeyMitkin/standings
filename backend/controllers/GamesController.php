@@ -2,9 +2,11 @@
 
 namespace backend\controllers;
 
+use backend\assets\GameUpdateAsset;
 use backend\models\tables\Games;
 use backend\models\filters\GamesFilter;
 use backend\models\tables\Teams;
+use backend\widgets\GameName;
 use yii\base\Event;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
@@ -57,8 +59,12 @@ class GamesController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+        $game_name = $model->getHome()->one()->name . ' ' . $model->home_goals . ' : ' . $model->visitor_goals . ' ' . $model->getVisitor()->one()->name;
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'game_name' => $game_name
         ]);
     }
 
@@ -118,6 +124,7 @@ class GamesController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $game_name = $model->getHome()->one()->name . ' ' . $model->home_goals . ' : ' . $model->visitor_goals . ' ' . $model->getVisitor()->one()->name;
 
         // Перед редактированием игры, вычитаем у команд голы и очки за эту игру
         Event::on(Games::class, Games::EVENT_BEFORE_UPDATE, function ($event){
@@ -153,8 +160,15 @@ class GamesController extends Controller
         // Список команд
         $team_list = ArrayHelper::map(Teams::find()->all(), 'id', 'name');
 
+        // Помещаем игравшие команды и счёт в layout
+        \Yii::$app->getView()->params['after_page_title'] = '«' . $game_name . '»';
+
+        // Ассет для шаблона
+        GameUpdateAsset::register($this->getView());
+
         return $this->render('update', [
             'model' => $model,
+            'game_name' => $game_name,
             'team_list' => $team_list
         ]);
     }
