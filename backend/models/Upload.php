@@ -26,11 +26,14 @@ class Upload extends Model
     // Загрузка изображений в common
     public function uploadCommonImage()
     {
-        $file_name = $this->team_logo->baseName . '.' . $this->team_logo->extension;
+        // Добавляем уникаольный id к имени изображения
+        $file_name = uniqid() . $this->team_logo->baseName . '.' . $this->team_logo->extension;
+
+        // Определяем пути, для сохранения в БД
         $img_path = \Yii::getAlias('@com_images/team_logo/'. $file_name);
         $img_path_small = \Yii::getAlias('@com_images/team_logo/small/'. $file_name);
 
-        // Загружаем полную и уменьшенную изображения
+        // Загружаем полное и уменьшенное изображения
         $this->team_logo->saveAs($img_path);
         if (Image::thumbnail($img_path, 260, 180)
             ->save($img_path_small)){
