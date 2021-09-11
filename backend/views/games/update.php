@@ -6,9 +6,9 @@ use yii\helpers\Html;
 /* @var $model app\models\tables\Games */
 
 $this->title = 'Редактировать Игру: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Games', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Игры', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = 'Редактировать';
 ?>
 <div class="games-update">
 
