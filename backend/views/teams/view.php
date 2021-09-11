@@ -13,11 +13,20 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="teams-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1 class="view-title col-md-4"><?= Html::encode($this->title) ?></h1>
+
+    <div class="team-logo-div col-md-8">
+        <?php
+         echo Html::img($model->logo_source,[
+                'class' => 'team-logo-img',
+                'alt'=>'Эмблема команды',
+         ]);
+        ?>
+    </div>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?= Html::a('Редактировать', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',

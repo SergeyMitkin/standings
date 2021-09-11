@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\assets\TeamViewAsset;
 use backend\models\tables\Teams;
 use backend\models\filters\TeamsFilter;
 use backend\models\Upload;
@@ -56,6 +57,9 @@ class TeamsController extends Controller
      */
     public function actionView($id)
     {
+        // Подключаем ассет
+        TeamViewAsset::register($this->getView());
+
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);

@@ -39,10 +39,9 @@ $this->title = 'Турнирная таблица';
                         return
                             '<span class="team-place-span">' . $place . '</span>' .
                             '<div class="team-logo-div">' .
-                                Html::img($model->logo_source,[
-                                    'class' => 'team_logo_img',
+                                Html::img($model->logo_source_small,[
+                                    'class' => 'team-logo-img',
                                     'alt'=>'Эмблема команды',
-                                    'style' => 'width:50px'
                                 ]) .
                             '</div>' .
                             '<span class="team-name-span">' . $model->name . '</span>'
