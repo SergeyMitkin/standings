@@ -23,6 +23,18 @@ class Upload extends Model
         ];
     }
 
+    // Удаление изобрахений
+    public function delImageFile($img_path, $img_path_small)
+    {
+        if (is_file($img_path)){
+            unlink($img_path);
+        }
+
+        if (is_file($img_path_small)){
+            unlink($img_path_small);
+        }
+    }
+
     // Загрузка изображений в common
     public function uploadCommonImage()
     {

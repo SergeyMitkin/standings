@@ -121,6 +121,9 @@ class TeamsController extends Controller
             // Загружаем эмблему команды
             if (UploadedFile::getInstance($model_upload, 'team_logo') !== Null){
 
+                // Удаляем изображения предыдущей эмблемы
+                $model_upload->delImageFile($model->logo_source, $model->logo_source_small);
+
                 // Загружаем эмблему команды
                 $model_upload->team_logo = UploadedFile::getInstance($model_upload, 'team_logo');
 
@@ -155,6 +158,12 @@ class TeamsController extends Controller
      */
     public function actionDelete($id)
     {
+        $model = $this->findModel($id);
+        $model_upload = new Upload();
+
+        // Удаляем изображения эмблемы
+        $model_upload->delImageFile($model->logo_source, $model->logo_source_small);
+
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
