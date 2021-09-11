@@ -2,7 +2,6 @@
 
 namespace backend\models\tables;
 
-
 /**
  * This is the model class for table "games".
  *
@@ -37,6 +36,9 @@ class Games extends \yii\db\ActiveRecord
             [['date'], 'safe'],
             [['home_id'], 'exist', 'skipOnError' => true, 'targetClass' => Teams::className(), 'targetAttribute' => ['home_id' => 'id']],
             [['visitor_id'], 'exist', 'skipOnError' => true, 'targetClass' => Teams::className(), 'targetAttribute' => ['visitor_id' => 'id']],
+
+            // home_id должен отличаться от visitor_id
+            [['visitor_id'], 'compare', 'compareAttribute' => 'home_id', 'operator' => '!=', 'type' => 'number', 'message' => 'В игре должны участвовать разные команды']
         ];
     }
 

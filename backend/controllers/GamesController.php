@@ -99,11 +99,12 @@ class GamesController extends Controller
         }
 
         // Список команд
+        $select_title = [0 => 'Выберите команду'];
         $team_list = ArrayHelper::map(Teams::find()->all(), 'id', 'name');
 
         return $this->render('create', [
             'model' => $model,
-            'team_list' => $team_list
+            'team_list' => array_merge($select_title, $team_list)
         ]);
     }
 
@@ -146,7 +147,7 @@ class GamesController extends Controller
         });
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-           // return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         // Список команд
