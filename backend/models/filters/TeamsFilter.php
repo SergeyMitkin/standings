@@ -54,11 +54,13 @@ class TeamsFilter extends Teams
                 'sort'=>[
                     'attributes' => [
                         'points',
-                        'goalsAmount'
+                        'goalsAmount' => [
+                            'default' => SORT_DESC
+                        ]
                     ],
 
                     'defaultOrder'=>[
-                        'points'=>SORT_DESC
+                        'points'=>SORT_DESC,
                     ]
 
                 ]
