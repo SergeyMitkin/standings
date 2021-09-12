@@ -53,10 +53,7 @@ $this->title = 'Турнирная таблица';
                     'attribute' => 'goalsAmount',
                     'content' => function($model, $key, $index, $column){
                         return
-                            '<span class="team-place-span">' . $model->gf . '</span>' .
-                            ' - ' .
-                            '<span class="team-name-span">' . $model->ga . '</span>'
-                            ;
+                            '<span class="goals-amount-span">' . $model->gf . ' - ' . $model->ga .'</span>';
                     }
                 ],
                 [

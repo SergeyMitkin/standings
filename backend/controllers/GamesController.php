@@ -6,7 +6,6 @@ use backend\assets\GameUpdateAsset;
 use backend\models\tables\Games;
 use backend\models\filters\GamesFilter;
 use backend\models\tables\Teams;
-use backend\widgets\GameName;
 use yii\base\Event;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;

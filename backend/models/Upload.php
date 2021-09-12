@@ -47,7 +47,7 @@ class Upload extends Model
 
         // Загружаем полное и уменьшенное изображения
         $this->team_logo->saveAs($img_path);
-        if (Image::thumbnail($img_path, 260, 180)
+        if (Image::thumbnail($img_path, 150, 150)
             ->save($img_path_small)){
 
             // Возвращаем пути к изображениям
