@@ -110,7 +110,7 @@ class GamesController extends Controller
 
         return $this->render('create', [
             'model' => $model,
-            'team_list' => array_merge($select_title, $team_list)
+            'team_list' => $select_title + $team_list
         ]);
     }
 
